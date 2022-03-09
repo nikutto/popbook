@@ -6,6 +6,9 @@ plugins {
 	kotlin("jvm") version "1.6.10"
 	kotlin("plugin.spring") version "1.6.10"
 	kotlin("plugin.jpa") version "1.6.10"
+
+	// detekt
+	id("io.gitlab.arturbosch.detekt") version "1.17.0"
 }
 
 group = "com.example"
