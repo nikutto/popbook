@@ -3,11 +3,13 @@ package com.example.popbook
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
+import kotlin.Suppress
 
 @Controller
 class PopbookController {
 
+    @Suppress("FunctionOnlyReturningConstant")
     @GetMapping("/")
-    fun hello(model: Model): String = "hello"
+    fun hello(): String = "hello"
 
 }
