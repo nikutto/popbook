@@ -7,9 +7,8 @@ import kotlin.Suppress
 @SpringBootTest
 class PopbookApplicationTests {
 
-	@Test
-	@Suppress("EmptyFunctionBlock")
-	fun contextLoads() {
-	}
-
+    @Test
+    @Suppress("EmptyFunctionBlock")
+    fun contextLoads() {
+    }
 }

@@ -8,5 +8,5 @@ class PopbookApplication
 
 @Suppress("SpreadOperator")
 fun main(args: Array<String>) {
-	runApplication<PopbookApplication>(*args)
+    runApplication<PopbookApplication>(*args)
 }

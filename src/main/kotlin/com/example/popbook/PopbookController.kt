@@ -1,7 +1,6 @@
 package com.example.popbook
 
 import org.springframework.stereotype.Controller
-import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import kotlin.Suppress
 
@@ -11,5 +10,4 @@ class PopbookController {
     @Suppress("FunctionOnlyReturningConstant")
     @GetMapping("/")
     fun hello(): String = "hello"
-
 }
