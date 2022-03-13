@@ -2,7 +2,6 @@ package com.example.popbook
 
 import com.example.popbook.api.RakutenAPIService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.ui.set
@@ -11,8 +10,7 @@ import kotlin.Suppress
 
 @Controller
 class PopbookController(
-    @Autowired val rakutenAPIService: RakutenAPIService,
-    @Value("rakutenapp.id") val appId: String
+    @Autowired val rakutenAPIService: RakutenAPIService
 ) {
 
     @Suppress("FunctionOnlyReturningConstant")
@@ -21,6 +19,7 @@ class PopbookController(
 
     @GetMapping("/test")
     fun test(model: Model): String {
+        val appId = System.getenv("APP_ID")!!
         val tmp = rakutenAPIService.listBooks(appId).execute()
         model["msg1"] = tmp.code()
         model["msg2"] = appId
