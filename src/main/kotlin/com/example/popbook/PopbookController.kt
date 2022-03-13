@@ -23,7 +23,7 @@ class PopbookController(
     fun test(model: Model): String {
         val tmp = rakutenAPIService.listBooks(appId).execute()
         model["msg1"] = tmp.code()
-        // model["msg2"] = tmp.body()
+        model["msg2"] = appId
         return "test"
     }
 }
