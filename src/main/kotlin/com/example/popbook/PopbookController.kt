@@ -24,6 +24,7 @@ class PopbookController(
     }
 
     @Suppress
+    @GetMapping("/update")
     fun update(model: Model): String {
         popbookService.update()
         return test(model)
