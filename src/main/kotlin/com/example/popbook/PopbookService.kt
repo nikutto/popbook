@@ -53,7 +53,7 @@ class PopbookService(
         val now = LocalDateTime.now()
         return books.isEmpty() ||
             ChronoUnit.MINUTES.between(
-            books.map { it.createdAt!! }.minOrNull()!!,
+            books.map { it.createdAt!! }.maxOrNull()!!,
             now
         )!! < 150
     }
