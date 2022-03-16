@@ -55,7 +55,7 @@ class PopbookService(
             ChronoUnit.MINUTES.between(
             books.map { it.createdAt!! }.maxOrNull()!!,
             now
-        )!! < 150
+        ) < 60
     }
 
     fun update() {
@@ -63,5 +63,38 @@ class PopbookService(
             insertUpdate()
         }
         deleteUpdate()
+    }
+
+    fun listPopbooks(): List<Book> {
+        val books = listAll()
+        val ans: MutableList<Book> = mutableListOf()
+        val s = mutableSetOf<String>()
+        for (book in books) {
+            if (!s.add(book.title)) {
+                continue
+            }
+            val now = LocalDateTime.now()
+            val isNew = books.filter { it.title == book.title }
+                .map { it.createdAt!! }
+                .all {
+                    ChronoUnit.DAYS.between(
+                        it,
+                        now
+                    ) <= 1
+                }
+            if (isNew) {
+                ans.add(book)
+            }
+        }
+        return ans.toList()
+    }
+
+    fun debug(): Long {
+        val books: List<Book> = bookRepository.findAll()
+        val now = LocalDateTime.now()
+        return ChronoUnit.MINUTES.between(
+            books.map { it.createdAt!! }.maxOrNull()!!,
+            now
+        )
     }
 }
