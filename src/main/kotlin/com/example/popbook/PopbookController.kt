@@ -1,6 +1,5 @@
 package com.example.popbook
 
-import com.example.popbook.dao.Book
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -18,36 +17,26 @@ class PopbookController(
     @GetMapping("/hello")
     fun hello(): String = "hello"
 
-    private fun render(model: Model, books: List<Book>): String {
-        model["books"] = books
-        return "test"
-    }
-
-    @GetMapping("/test")
-    fun test(model: Model): String {
-        val books = popbookService.listAll()
-        return render(model, books)
-    }
-
     @Suppress
     @PostMapping("/update")
     fun update(model: Model): String {
         popbookService.update()
-        return test(model)
+        return debug(model)
     }
 
     @Suppress
-    @GetMapping("/popbook")
+    @GetMapping("/")
     fun popbook(model: Model): String {
-        val books = popbookService.listPopbooks()
-        return render(model, books)
+        model["books"] = popbookService.listPopbooks()
+        return "list"
     }
 
     @Suppress
     @GetMapping("/debug")
     fun debug(model: Model): String {
         val msg = popbookService.debug()
-        model["msg"] = msg
+        model["msg"] = "Book list is updated in ${msg} minutes."
+        model["books"] = popbookService.listAll()
         return "debug"
     }
 }
