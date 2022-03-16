@@ -1,7 +1,13 @@
 <html>
-
+    <head>
+        <title> 楽天の本の急上昇をいいかんじに検知するやつ </title>
+    </head>
     <body>
-        <p>{{msg1}}</p>
-        <p>{{msg2}}</p>
+        <h1> 本一覧 </h1>
+        <ul>
+            {{#books}}
+                <li> <img src={{imageUrl}}> - {{title}} - {{author}} - {{createdAt}} </li>
+            {{/books}}  
+        </ul>
     </body>
 </html>
