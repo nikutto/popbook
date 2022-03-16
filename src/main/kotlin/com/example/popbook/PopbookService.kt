@@ -4,7 +4,8 @@ import com.example.popbook.api.RakutenAPIService
 import com.example.popbook.dao.Book
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.util.Date
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 
 @Service
 class PopbookService(
@@ -35,7 +36,7 @@ class PopbookService(
                     item.author!!,
                     item.itemUrl!!,
                     item.mediumImageUrl!!,
-                    Date()
+                    LocalDateTime.now()
                 )
                 bookRepository.save(book)
             }
@@ -46,8 +47,21 @@ class PopbookService(
     private fun deleteUpdate() {
     }
 
+    @Suppress("MagicNumber")
+    private fun isRecentlyUpdated(): Boolean {
+        val books: List<Book> = bookRepository.findAll()
+        val now = LocalDateTime.now()
+        return books.isEmpty() ||
+            ChronoUnit.MINUTES.between(
+            books.map { it.createdAt!! }.minOrNull()!!,
+            now
+        )!! < 150
+    }
+
     fun update() {
-        insertUpdate()
+        if (!isRecentlyUpdated()) {
+            insertUpdate()
+        }
         deleteUpdate()
     }
 }

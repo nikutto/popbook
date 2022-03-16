@@ -1,6 +1,6 @@
 package com.example.popbook.dao
 
-import java.util.Date
+import java.time.LocalDateTime
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -17,5 +17,5 @@ class Book(
     val author: String,
     val itemUrl: String,
     val imageUrl: String,
-    val createdAt: Date?
+    val createdAt: LocalDateTime?
 )

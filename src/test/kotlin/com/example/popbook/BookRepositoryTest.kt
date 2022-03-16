@@ -4,7 +4,7 @@ import com.example.popbook.dao.Book
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import java.util.Date
+import java.time.LocalDateTime
 
 @SpringBootTest
 class BookRepositoryTest(
@@ -19,7 +19,7 @@ class BookRepositoryTest(
             author = "Oshiri",
             itemUrl = "https://unti.com/item",
             imageUrl = "https://unti.com/image",
-            createdAt = Date(),
+            createdAt = LocalDateTime.now(),
         )
         bookRepository.save(book)
     }
