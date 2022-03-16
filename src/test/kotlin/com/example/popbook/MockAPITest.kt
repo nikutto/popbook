@@ -1,7 +1,6 @@
 package com.example.popbook
 
 import com.example.popbook.api.RakutenAPIService
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -13,11 +12,9 @@ class MockAPITest(
 
     @Test
     fun mockTest() {
-        val msg = testRakutenAPIService
+        testRakutenAPIService
             .listBooks("APP_ID")
             .execute()
             .body()!!
-            .string()
-        assertEquals("msg", msg)
     }
 }
