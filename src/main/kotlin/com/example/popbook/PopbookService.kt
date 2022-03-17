@@ -80,7 +80,7 @@ class PopbookService(
     }
 
     fun listPopbooks(): List<Book> {
-        val books = listAll()
+        val books = listAll().sortedBy { it.createdAt!! }.reversed()
         val ans: MutableList<Book> = mutableListOf()
         val s = mutableSetOf<String>()
         for (book in books) {
