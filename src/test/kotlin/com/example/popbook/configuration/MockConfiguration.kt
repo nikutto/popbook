@@ -22,7 +22,7 @@ class MockConfiguration {
 
         every { resp.body() } returns BookListResp()
         every { callee.execute() } returns resp
-        every { service.listBooks(any()) } returns callee
+        every { service.listBooks(any(), any()) } returns callee
 
         return service
     }

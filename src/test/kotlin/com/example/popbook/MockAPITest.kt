@@ -13,7 +13,7 @@ class MockAPITest(
     @Test
     fun mockTest() {
         testRakutenAPIService
-            .listBooks("APP_ID")
+            .listBooks("APP_ID", 1)
             .execute()
             .body()!!
     }

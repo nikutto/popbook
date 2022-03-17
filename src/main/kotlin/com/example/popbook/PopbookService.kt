@@ -17,28 +17,30 @@ class PopbookService(
         return bookRepository.findAll().toList()
     }
 
-    @Suppress("UnusedPrivateMember", "ComplexCondition")
+    @Suppress("ComplexCondition", "MagicNumber")
     private fun insertUpdate() {
         val appId = System.getenv("APP_ID")!!
-        val books = rakutenAPIService.listBooks(appId).execute().body()!!
-        val items = books.Items
-        for (elem in items) {
-            val item = elem.Item
-            if (item != null &&
-                item.title != null &&
-                item.author != null &&
-                item.itemUrl != null &&
-                item.mediumImageUrl != null
-            ) {
-                val book = Book(
-                    null,
-                    item.title!!,
-                    item.author!!,
-                    item.itemUrl!!,
-                    item.mediumImageUrl!!,
-                    LocalDateTime.now()
-                )
-                bookRepository.save(book)
+        for (i in 1..4) {
+            val books = rakutenAPIService.listBooks(appId, i + 1).execute().body()!!
+            val items = books.Items
+            for (elem in items) {
+                val item = elem.Item
+                if (item != null &&
+                    item.title != null &&
+                    item.author != null &&
+                    item.itemUrl != null &&
+                    item.mediumImageUrl != null
+                ) {
+                    val book = Book(
+                        null,
+                        item.title!!,
+                        item.author!!,
+                        item.itemUrl!!,
+                        item.mediumImageUrl!!,
+                        LocalDateTime.now()
+                    )
+                    bookRepository.save(book)
+                }
             }
         }
     }
@@ -55,7 +57,7 @@ class PopbookService(
             ChronoUnit.MINUTES.between(
             books.map { it.createdAt!! }.maxOrNull()!!,
             now
-        ) < 60
+        ) < 90
     }
 
     fun update() {
