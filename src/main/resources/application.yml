@@ -1,0 +1,14 @@
+spring:
+  jpa:
+    database: POSTGRESQL
+  datasource:
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASS}
+rakutenapp:
+  id: ${APP_ID}
+appconfig:
+  updateIntervalMinutes: 90
+  poppingHours: 24
+  expireHours: 168
+  nPage: 4
