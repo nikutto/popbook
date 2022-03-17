@@ -14,11 +14,9 @@ class PopbookService(
     @Autowired val serviceConfiguration: ServiceConfiguration
 ) {
 
-    fun listAll(): List<Book> {
-        return bookRepository.findAll().toList()
-    }
+    fun listAll() = bookRepository.findAll().toList()
 
-    @Suppress("ComplexCondition", "MagicNumber")
+    @Suppress("ComplexCondition")
     private fun insertUpdate() {
         val appId = System.getenv("APP_ID")!!
         val now = LocalDateTime.now()
@@ -47,7 +45,6 @@ class PopbookService(
         }
     }
 
-    @Suppress("MagicNumber")
     private fun deleteUpdate() {
         val books: List<Book> = bookRepository.findAll()
         val now = LocalDateTime.now()
@@ -62,7 +59,6 @@ class PopbookService(
         }
     }
 
-    @Suppress("MagicNumber")
     private fun isRecentlyUpdated(): Boolean {
         val books: List<Book> = bookRepository.findAll()
         val now = LocalDateTime.now()
@@ -80,7 +76,6 @@ class PopbookService(
         deleteUpdate()
     }
 
-    @Suppress("MagicNumber")
     fun listPopbooks(): List<Book> {
         val books = listAll().sortedBy { it.createdAt!! }.reversed()
         val ans: MutableList<Book> = mutableListOf()
