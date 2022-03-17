@@ -35,7 +35,7 @@ class PopbookController(
     @GetMapping("/debug")
     fun debug(model: Model): String {
         val msg = popbookService.debug()
-        model["msg"] = "Book list is updated in ${msg} minutes."
+        model["msg"] = "Book list is updated in $msg minutes."
         model["books"] = popbookService.listAll()
         return "debug"
     }
