@@ -79,6 +79,7 @@ class PopbookService(
         deleteUpdate()
     }
 
+    @Suppress("MagicNumber")
     fun listPopbooks(): List<Book> {
         val books = listAll().sortedBy { it.createdAt!! }.reversed()
         val ans: MutableList<Book> = mutableListOf()
@@ -91,10 +92,10 @@ class PopbookService(
             val isNew = books.filter { it.title == book.title }
                 .map { it.createdAt!! }
                 .all {
-                    ChronoUnit.DAYS.between(
+                    ChronoUnit.HOURS.between(
                         it,
                         now
-                    ) <= 1
+                    ) <= 24
                 }
             if (isNew) {
                 ans.add(book)
