@@ -22,7 +22,7 @@ class PopbookService(
         val appId = System.getenv("APP_ID")!!
         val now = LocalDateTime.now()
         for (i in 1..4) {
-            val books = rakutenAPIService.listBooks(appId, i + 1).execute().body()!!
+            val books = rakutenAPIService.listBooks(appId, i).execute().body()!!
             val items = books.Items
             for (elem in items) {
                 val item = elem.Item
