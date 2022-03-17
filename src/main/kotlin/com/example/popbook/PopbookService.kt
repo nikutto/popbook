@@ -10,7 +10,8 @@ import java.time.temporal.ChronoUnit
 @Service
 class PopbookService(
     @Autowired val bookRepository: BookRepository,
-    @Autowired val rakutenAPIService: RakutenAPIService
+    @Autowired val rakutenAPIService: RakutenAPIService,
+    @Autowired val serviceConfiguration: ServiceConfiguration
 ) {
 
     fun listAll(): List<Book> {
@@ -21,7 +22,7 @@ class PopbookService(
     private fun insertUpdate() {
         val appId = System.getenv("APP_ID")!!
         val now = LocalDateTime.now()
-        for (i in 1..4) {
+        for (i in 1..serviceConfiguration.nPage) {
             val books = rakutenAPIService.listBooks(appId, i).execute().body()!!
             val items = books.Items
             for (elem in items) {
@@ -51,11 +52,11 @@ class PopbookService(
         val books: List<Book> = bookRepository.findAll()
         val now = LocalDateTime.now()
         for (book in books) {
-            val diffDays = ChronoUnit.DAYS.between(
+            val diffHours = ChronoUnit.HOURS.between(
                 book.createdAt!!,
                 now
             )
-            if (diffDays >= 7) {
+            if (diffHours >= serviceConfiguration.expireHours) {
                 bookRepository.delete(book)
             }
         }
@@ -69,7 +70,7 @@ class PopbookService(
             ChronoUnit.MINUTES.between(
             books.map { it.createdAt!! }.maxOrNull()!!,
             now
-        ) < 90
+        ) < serviceConfiguration.updateIntervalMinutes
     }
 
     fun update() {
@@ -95,7 +96,7 @@ class PopbookService(
                     ChronoUnit.HOURS.between(
                         it,
                         now
-                    ) <= 24
+                    ) <= serviceConfiguration.poppingHours
                 }
             if (isNew) {
                 ans.add(book)
