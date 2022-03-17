@@ -75,15 +75,12 @@ class PopbookService(
     }
 
     fun listPopbooks(): List<Book> {
-        val books = listAll().sortedBy { it.createdAt!! }.reversed()
-        val ans: MutableList<Book> = mutableListOf()
-        val s = mutableSetOf<String>()
-        for (book in books) {
-            if (!s.add(book.title)) {
-                continue
-            }
-            val now = LocalDateTime.now()
-            val isNew = books.filter { it.title == book.title }
+        val books = listAll()
+        val titles = books.map { it.title }.distinct()
+        val now = LocalDateTime.now()
+
+        val isNewTitle = { title: String ->
+            books.filter { title == it.title }
                 .map { it.createdAt!! }
                 .all {
                     ChronoUnit.HOURS.between(
@@ -91,11 +88,17 @@ class PopbookService(
                         now
                     ) <= serviceConfiguration.poppingHours
                 }
-            if (isNew) {
-                ans.add(book)
-            }
         }
-        return ans.toList()
+
+        return titles.filter(isNewTitle)
+            .map {
+                title ->
+                books.filter {
+                    it.title == title
+                }.maxByOrNull {
+                    it.createdAt!!
+                }!!
+            }.toList()
     }
 
     fun debug(): Long {
