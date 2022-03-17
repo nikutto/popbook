@@ -6,6 +6,7 @@ import com.example.popbook.dto.Item
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.temporal.ChronoUnit
 
 @Service
@@ -17,14 +18,18 @@ class PopbookService(
 
     fun listAll() = bookRepository.findAll().toList()
 
-    private fun isValidItem(item: Item) = item.title != null &&
-        item.author != null &&
-        item.itemUrl != null &&
-        item.mediumImageUrl != null
+    companion object {
+        private fun isValidItem(item: Item) = item.title != null &&
+            item.author != null &&
+            item.itemUrl != null &&
+            item.mediumImageUrl != null
+
+        private fun getNow() = LocalDateTime.now(ZoneId.of("Asia/Tokyo"))
+    }
 
     private fun insertUpdate() {
         val appId = System.getenv("APP_ID")!!
-        val now = LocalDateTime.now()
+        val now = getNow()
         for (i in 1..serviceConfiguration.nPage) {
             val books = rakutenAPIService.listBooks(appId, i).execute().body()!!
             val items = books.Items
@@ -47,7 +52,7 @@ class PopbookService(
 
     private fun deleteUpdate() {
         val books: List<Book> = bookRepository.findAll()
-        val now = LocalDateTime.now()
+        val now = getNow()
         for (book in books) {
             val diffHours = ChronoUnit.HOURS.between(book.createdAt!!, now)
             if (diffHours >= serviceConfiguration.expireHours) {
@@ -58,7 +63,7 @@ class PopbookService(
 
     private fun isRecentlyUpdated(): Boolean {
         val books: List<Book> = bookRepository.findAll()
-        val now = LocalDateTime.now()
+        val now = getNow()
         if (books.isEmpty()) return false
         val previousUpdateHours = ChronoUnit.MINUTES.between(
             books.map { it.createdAt!! }.maxOrNull()!!,
@@ -77,7 +82,7 @@ class PopbookService(
     fun listPopbooks(): List<Book> {
         val books = listAll()
         val titles = books.map { it.title }.distinct()
-        val now = LocalDateTime.now()
+        val now = getNow()
 
         val isNewTitle = { title: String ->
             books.filter { title == it.title }
@@ -103,7 +108,7 @@ class PopbookService(
 
     fun debug(): Long {
         val books: List<Book> = bookRepository.findAll()
-        val now = LocalDateTime.now()
+        val now = getNow()
         return ChronoUnit.MINUTES.between(
             books.map { it.createdAt!! }.maxOrNull()!!,
             now

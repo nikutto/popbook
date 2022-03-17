@@ -33,21 +33,18 @@ class PopbookController(
     @GetMapping("/hello")
     fun hello(): String = "hello"
 
-    @Suppress
     @PostMapping("/update")
     fun update(model: Model): String {
         popbookService.update()
         return debug(model)
     }
 
-    @Suppress
     @GetMapping("/")
     fun popbook(model: Model): String {
         model["books"] = toDtos(popbookService.listPopbooks())
         return "list"
     }
 
-    @Suppress
     @GetMapping("/debug")
     fun debug(model: Model): String {
         val msg = popbookService.debug()
