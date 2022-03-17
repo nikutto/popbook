@@ -20,6 +20,7 @@ class PopbookService(
     @Suppress("ComplexCondition", "MagicNumber")
     private fun insertUpdate() {
         val appId = System.getenv("APP_ID")!!
+        val now = LocalDateTime.now()
         for (i in 1..4) {
             val books = rakutenAPIService.listBooks(appId, i + 1).execute().body()!!
             val items = books.Items
@@ -37,7 +38,7 @@ class PopbookService(
                         item.author!!,
                         item.itemUrl!!,
                         item.mediumImageUrl!!,
-                        LocalDateTime.now()
+                        now,
                     )
                     bookRepository.save(book)
                 }
@@ -45,8 +46,19 @@ class PopbookService(
         }
     }
 
-    @Suppress("EmptyFunctionBlock")
+    @Suppress("MagicNumber")
     private fun deleteUpdate() {
+        val books: List<Book> = bookRepository.findAll()
+        val now = LocalDateTime.now()
+        for (book in books) {
+            val diffDays = ChronoUnit.DAYS.between(
+                book.createdAt!!,
+                now
+            )
+            if (diffDays >= 7) {
+                bookRepository.delete(book)
+            }
+        }
     }
 
     @Suppress("MagicNumber")
