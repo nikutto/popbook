@@ -49,10 +49,7 @@ class PopbookService(
         val books: List<Book> = bookRepository.findAll()
         val now = LocalDateTime.now()
         for (book in books) {
-            val diffHours = ChronoUnit.HOURS.between(
-                book.createdAt!!,
-                now
-            )
+            val diffHours = ChronoUnit.HOURS.between(book.createdAt!!, now)
             if (diffHours >= serviceConfiguration.expireHours) {
                 bookRepository.delete(book)
             }
@@ -62,11 +59,12 @@ class PopbookService(
     private fun isRecentlyUpdated(): Boolean {
         val books: List<Book> = bookRepository.findAll()
         val now = LocalDateTime.now()
-        return books.isEmpty() ||
-            ChronoUnit.MINUTES.between(
+        if (books.isEmpty()) return false
+        val previousUpdateHours = ChronoUnit.MINUTES.between(
             books.map { it.createdAt!! }.maxOrNull()!!,
             now
-        ) < serviceConfiguration.updateIntervalMinutes
+        )
+        return previousUpdateHours < serviceConfiguration.updateIntervalMinutes
     }
 
     fun update() {
