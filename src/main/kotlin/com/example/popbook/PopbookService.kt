@@ -31,6 +31,9 @@ class PopbookService(
         val appId = System.getenv("APP_ID")!!
         val now = getNow()
         for (i in 1..serviceConfiguration.nPage) {
+            if (i != 1) {
+                Thread.sleep(1)
+            }
             val books = rakutenAPIService.listBooks(appId, i).execute().body()!!
             val items = books.Items
             for (elem in items) {
