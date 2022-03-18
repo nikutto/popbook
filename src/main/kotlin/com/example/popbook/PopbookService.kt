@@ -105,6 +105,7 @@ class PopbookService(
                 }!!
             }.sortedBy {
                 it.createdAt!!
+            }.reversed()
             }.toList()
     }
 
