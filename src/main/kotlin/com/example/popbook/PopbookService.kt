@@ -117,4 +117,10 @@ class PopbookService(
             now
         )
     }
+
+    fun listLatest(): List<Book> {
+        val books = bookRepository.findAll()
+        val latest = books.map { it.createdAt!! }.maxOrNull()!!
+        return books.filter { it.createdAt!! == latest }.toList()
+    }
 }

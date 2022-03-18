@@ -61,7 +61,9 @@ class PopbookController(
     @GetMapping("/contact")
     fun contact() = "contact"
 
-    @Suppress("FunctionOnlyReturningConstant")
     @GetMapping("/latest")
-    fun latest() = "latest"
+    fun latest(model: Model): String {
+        model["books"] = toDtos(popbookService.listLatest())
+        return "latest"
+    }
 }
