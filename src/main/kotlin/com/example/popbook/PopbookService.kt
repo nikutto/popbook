@@ -100,9 +100,11 @@ class PopbookService(
                 title ->
                 books.filter {
                     it.title == title
-                }.maxByOrNull {
+                }.minByOrNull {
                     it.createdAt!!
                 }!!
+            }.sortedBy {
+                it.createdAt!!
             }.toList()
     }
 
