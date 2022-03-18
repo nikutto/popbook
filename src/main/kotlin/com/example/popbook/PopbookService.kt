@@ -106,7 +106,7 @@ class PopbookService(
             }.sortedBy {
                 it.createdAt!!
             }.reversed()
-            }.toList()
+            .toList()
     }
 
     fun debug(): Long {
