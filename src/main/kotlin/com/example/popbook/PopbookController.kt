@@ -52,4 +52,16 @@ class PopbookController(
         model["books"] = toDtos(popbookService.listAll())
         return "debug"
     }
+
+    @Suppress("FunctionOnlyReturningConstant")
+    @GetMapping("/about")
+    fun about() = "about"
+
+    @Suppress("FunctionOnlyReturningConstant")
+    @GetMapping("/contact")
+    fun contact() = "contact"
+
+    @Suppress("FunctionOnlyReturningConstant")
+    @GetMapping("/latest")
+    fun latest() = "latest"
 }
