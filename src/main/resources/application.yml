@@ -11,4 +11,5 @@ appconfig:
   updateIntervalMinutes: 90
   poppingHours: 24
   expireHours: 168
-  nPage: 6
+  nPage: 20
+  nMaxInsert: 150

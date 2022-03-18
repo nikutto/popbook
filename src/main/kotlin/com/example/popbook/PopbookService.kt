@@ -22,7 +22,8 @@ class PopbookService(
         private fun isValidItem(item: Item) = item.title != null &&
             item.author != null &&
             item.itemUrl != null &&
-            item.mediumImageUrl != null
+            item.mediumImageUrl != null &&
+            (item.booksGenreId == null || !item.booksGenreId!!.startsWith("001001"))
 
         private fun getNow() = LocalDateTime.now(ZoneId.of("Asia/Tokyo"))
     }
@@ -30,6 +31,7 @@ class PopbookService(
     private fun insertUpdate() {
         val appId = System.getenv("APP_ID")!!
         val now = getNow()
+        var cnt = 0
         for (i in 1..serviceConfiguration.nPage) {
             if (i != 1) {
                 Thread.sleep(1)
@@ -48,6 +50,10 @@ class PopbookService(
                         createdAt = now,
                     )
                     bookRepository.save(book)
+                    cnt += 1
+                }
+                if (cnt == serviceConfiguration.nMaxInsert) {
+                    return
                 }
             }
         }

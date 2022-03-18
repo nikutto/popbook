@@ -10,4 +10,5 @@ data class ServiceConfiguration(
     val poppingHours: Int,
     val expireHours: Int,
     val nPage: Int,
+    val nMaxInsert: Int,
 )
