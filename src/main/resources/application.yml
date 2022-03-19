@@ -10,6 +10,6 @@ rakutenapp:
 appconfig:
   updateIntervalMinutes: 90
   poppingHours: 24
-  expireHours: 168
+  expireHours: 100
   nPage: 20
   nMaxInsert: 150
