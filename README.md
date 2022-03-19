@@ -2,7 +2,7 @@
 # Overview
 
 This application picks up popular books by using Rakuten API.
-Deployed [here]{https://popbook.herokuapp.com/about}.
+Deployed [here](https://popbook.herokuapp.com/about).
 
 # General specification
 
