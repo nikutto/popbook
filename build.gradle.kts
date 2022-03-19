@@ -38,6 +38,9 @@ dependencies {
     testImplementation("io.mockk:mockk:1.12.3")
 
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
+    implementation("org.webjars:bootstrap:5.1.3")
+    implementation("org.webjars:jquery:3.3.1")
 }
 
 tasks.withType<KotlinCompile> {
