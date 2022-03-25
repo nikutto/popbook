@@ -1,0 +1,13 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: openjdk:11
+    steps:
+      - run:
+          name: Build whole app.
+          command: |
+            echo 'Build Start...'
+            ./gradlew build
+            echo 'Build Completed!'
+            
