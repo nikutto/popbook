@@ -13,6 +13,6 @@ jobs:
       - run:
           name: Build whole app.
           command: |
-            source local_script
+            source local_script.sh
             ./gradlew build
             
