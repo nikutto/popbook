@@ -7,8 +7,6 @@ jobs:
         auth:
           username: postgres
           password: password
-        ports:
-          - 5432:5432
     steps:
       - checkout
       - run:
