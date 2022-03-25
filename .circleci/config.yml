@@ -4,6 +4,7 @@ jobs:
     docker:
       - image: openjdk:11
     steps:
+      - checkout
       - run:
           name: Build whole app.
           command: |
