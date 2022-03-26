@@ -29,16 +29,14 @@ class PopbookService(
             if (i != 1) {
                 Thread.sleep(1)
             }
-            val bookDtos = rakutenAPIService.listBooks(i).filter { it.isNotComic() }.toList()
-            for (bookDto in bookDtos) {
-                val book = Book(
-                    id = null,
-                    bookDto.title,
-                    bookDto.author,
-                    bookDto.itemUrl,
-                    bookDto.imageUrl,
-                    createdAt = now,
-                )
+            val books = rakutenAPIService
+                .listBooks(i)
+                .filter {
+                    it.isNotComic()
+                }.map {
+                    it.toDao(now)
+                }.toList()
+            for (book in books) {
                 bookRepository.save(book)
                 cnt += 1
                 if (cnt >= serviceConfiguration.nMaxInsert) {
