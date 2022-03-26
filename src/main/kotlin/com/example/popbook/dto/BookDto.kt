@@ -5,5 +5,8 @@ data class BookDto(
     val author: String,
     val itemUrl: String,
     val imageUrl: String,
+    val booksGenreId: String?,
     val createdAt: String
-)
+) {
+    fun isNotComic() = booksGenreId == null || !booksGenreId.startsWith("001001")
+}
