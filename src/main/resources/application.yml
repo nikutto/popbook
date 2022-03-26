@@ -2,9 +2,9 @@ spring:
   jpa:
     database: POSTGRESQL
   datasource:
-    url: ${POSTGRES_URL}
-    username: ${POSTGRES_USER}
-    password: ${POSTGRES_PASS}
+    url: ${PGHOST}
+    username: ${PGUSER}
+    password: ${PGPASSWORD}
 rakutenapp:
   id: ${APP_ID}
 appconfig:

@@ -8,12 +8,15 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: password
           POSTGRES_DB: testdb
-        volumes:
-          - ./resource/:/docker-entrypoint-initdb.d
     steps:
       - checkout
       - run:
-          name: Build whole app.
+        name: Create table.
+        command: |
+          apt install -y postgresql-client || true
+          psql -f ./src/main/resource/db/table.sql
+      - run:
+          name: Build app.
           command: |
             source local_script.sh
             ./gradlew build
