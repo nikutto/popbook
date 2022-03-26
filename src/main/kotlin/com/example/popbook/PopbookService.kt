@@ -19,7 +19,6 @@ class PopbookService(
     fun listAll() = bookRepository.findAll().toList()
 
     companion object {
-
         private fun getNow() = LocalDateTime.now(ZoneId.of("Asia/Tokyo"))
     }
 
