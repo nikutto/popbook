@@ -9,13 +9,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RakutenAPIServiceConfiguration {
 
     @Bean
-    fun rakutenAPIService(): RakutenAPIService {
+    fun rakutenAPIServiceImpl(): RakutenAPIServiceImpl {
 
         val retrofit = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl("https://app.rakuten.co.jp/services/api/")
             .build()
 
-        return retrofit.create(RakutenAPIService::class.java)
+        return retrofit.create(RakutenAPIServiceImpl::class.java)
     }
 }
