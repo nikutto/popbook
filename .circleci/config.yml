@@ -21,7 +21,7 @@ jobs:
             date
             source local_script.sh
             sudo apt install -y postgresql-client || true
-            psql --host=localhost -f ./src/main/resource/db/table.sql
+            psql --host=localhost -f ./src/main/resources/db/table.sql
       - run:
           name: Build app.
           command: |
