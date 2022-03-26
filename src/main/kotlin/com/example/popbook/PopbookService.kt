@@ -2,6 +2,7 @@ package com.example.popbook
 
 import com.example.popbook.api.RakutenAPIService
 import com.example.popbook.dao.BookDao
+import com.example.popbook.dto.BookDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
@@ -50,7 +51,7 @@ class PopbookService(
         val books: List<BookDao> = bookRepository.findAll()
         val now = getNow()
         for (book in books) {
-            val diffHours = ChronoUnit.HOURS.between(book.createdAt!!, now)
+            val diffHours = ChronoUnit.HOURS.between(book.createdAt, now)
             if (diffHours >= serviceConfiguration.expireHours) {
                 bookRepository.delete(book)
             }
@@ -62,7 +63,7 @@ class PopbookService(
         val now = getNow()
         if (books.isEmpty()) return false
         val previousUpdateHours = ChronoUnit.MINUTES.between(
-            books.map { it.createdAt!! }.maxOrNull()!!,
+            books.map { it.createdAt }.maxOrNull()!!,
             now
         )
         return previousUpdateHours < serviceConfiguration.updateIntervalMinutes
@@ -75,14 +76,14 @@ class PopbookService(
         deleteUpdate()
     }
 
-    fun listPopbooks(): List<BookDao> {
+    fun listPopbooks(): List<BookDto> {
         val books = listAll()
         val titles = books.map { it.title }.distinct()
         val now = getNow()
 
         val isNewTitle = { title: String ->
             books.filter { title == it.title }
-                .map { it.createdAt!! }
+                .map { it.createdAt }
                 .all {
                     ChronoUnit.HOURS.between(
                         it,
@@ -97,11 +98,12 @@ class PopbookService(
                 books.filter {
                     it.title == title
                 }.minByOrNull {
-                    it.createdAt!!
+                    it.createdAt
                 }!!
             }.sortedBy {
-                it.createdAt!!
+                it.createdAt
             }.reversed()
+            .map(BookDao::toDto)
             .toList()
     }
 
@@ -109,14 +111,14 @@ class PopbookService(
         val books: List<BookDao> = bookRepository.findAll()
         val now = getNow()
         return ChronoUnit.MINUTES.between(
-            books.map { it.createdAt!! }.maxOrNull()!!,
+            books.map { it.createdAt }.maxOrNull()!!,
             now
         )
     }
 
-    fun listLatest(): List<BookDao> {
+    fun listLatest(): List<BookDto> {
         val books = bookRepository.findAll()
-        val latest = books.map { it.createdAt!! }.maxOrNull()!!
-        return books.filter { it.createdAt!! == latest }.toList()
+        val latest = books.map { it.createdAt }.maxOrNull()!!
+        return books.filter { it.createdAt == latest }.map(BookDao::toDto).toList()
     }
 }
