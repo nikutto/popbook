@@ -14,6 +14,7 @@ jobs:
           name: Waiting for Postgres to be ready
           command: |
             date
+            source local_script.sh
             dockerize -wait tcp://localhost:5432 -timeout 1m
       - run:
           name: Create table.
