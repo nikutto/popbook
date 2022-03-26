@@ -1,6 +1,6 @@
 package com.example.popbook
 
-import com.example.popbook.dao.Book
+import com.example.popbook.dao.BookDao
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -13,7 +13,7 @@ class BookRepositoryTest(
 
     @Test
     fun saveTest() {
-        val book = Book(
+        val book = BookDao(
             id = null,
             title = "Unti",
             author = "Oshiri",

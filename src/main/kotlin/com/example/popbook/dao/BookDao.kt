@@ -6,9 +6,11 @@ import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.SequenceGenerator
+import javax.persistence.Table
 
 @Entity
-class Book(
+@Table(name = "book")
+class BookDao(
     @Id
     @SequenceGenerator(name = "book_id_seq")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

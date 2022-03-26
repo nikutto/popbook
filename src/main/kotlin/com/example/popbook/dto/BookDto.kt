@@ -1,6 +1,6 @@
 package com.example.popbook.dto
 
-import com.example.popbook.dao.Book
+import com.example.popbook.dao.BookDao
 import java.time.LocalDateTime
 
 data class BookDto(
@@ -13,7 +13,7 @@ data class BookDto(
 ) {
     fun isNotComic() = booksGenreId == null || !booksGenreId.startsWith("001001")
 
-    fun toDao(createdAt: LocalDateTime) = Book(
+    fun toDao(createdAt: LocalDateTime) = BookDao(
         id = null,
         title,
         author,

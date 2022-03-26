@@ -1,6 +1,6 @@
 package com.example.popbook
 
-import com.example.popbook.dao.Book
+import com.example.popbook.dao.BookDao
 import com.example.popbook.dto.BookDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
@@ -15,7 +15,7 @@ class PopbookController(
     @Autowired val popbookService: PopbookService
 ) {
     companion object {
-        private fun toDtos(books: List<Book>): List<BookDto> {
+        private fun toDtos(books: List<BookDao>): List<BookDto> {
             val df = DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm")
             return books.map {
                 BookDto(
