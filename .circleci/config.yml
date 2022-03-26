@@ -13,7 +13,7 @@ jobs:
       - run:
           name: Create table.
           command: |
-            apt install -y postgresql-client || true
+            sudo apt install -y postgresql-client || true
             psql -f ./src/main/resource/db/table.sql
       - run:
           name: Build app.
