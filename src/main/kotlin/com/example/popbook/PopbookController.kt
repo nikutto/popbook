@@ -23,6 +23,7 @@ class PopbookController(
                     author = it.author,
                     itemUrl = it.itemUrl,
                     imageUrl = it.imageUrl,
+                    booksGenreId = null,
                     createdAt = df.format(it.createdAt!!)
                 )
             }
