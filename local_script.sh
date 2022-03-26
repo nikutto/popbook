@@ -1,4 +1,4 @@
-echo "Processing..."
+echo "Start setting enviroment variables."
 
 set -e
 export PGDATABASE="testdb"
