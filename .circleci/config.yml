@@ -10,9 +10,9 @@ jobs:
           POSTGRES_DB: testdb
     steps:
       - checkout
-        - run:
-            name: Waiting for Postgres to be ready
-            command: dockerize -wait tcp://localhost:5432 -timeout 
+      - run:
+          name: Waiting for Postgres to be ready
+          command: dockerize -wait tcp://localhost:5432 -timeout 
       - run:
           name: Create table.
           command: |
