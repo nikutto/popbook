@@ -55,8 +55,7 @@ data class Item(
     }
 }
 
-@Suppress("ConstructorParameterNaming")
 data class ItemWrapper(
-    @SerializedName("Item") var Item: Item? = Item()
+    @SerializedName("Item") var item: Item? = Item()
 
 )

@@ -16,8 +16,8 @@ class RakutenAPIService(
         val appId = System.getenv("APP_ID")!!
         val resp = rakutenAPIServiceImpl.listBooks(appId, page).execute().body()!!
         return resp
-            .Items
-            .map { it.Item }
+            .items
+            .map { it.item }
             .filterNotNull()
             .filter(Item::isValidItem)
             .map(Item::toDto)
