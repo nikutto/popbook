@@ -2,7 +2,7 @@ spring:
   jpa:
     database: POSTGRESQL
   datasource:
-    url: ${PGHOST}
+    url: ${PGURL}
     username: ${PGUSER}
     password: ${PGPASSWORD}
 rakutenapp:
