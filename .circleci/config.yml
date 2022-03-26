@@ -10,11 +10,14 @@ jobs:
           POSTGRES_DB: testdb
     steps:
       - checkout
+        - run:
+          name: Waiting for Postgres to be ready
+          command: dockerize -wait tcp://localhost:5432 -timeout 
       - run:
           name: Create table.
           command: |
             sudo apt install -y postgresql-client || true
-            psql --host=/tmp/.s.PGSQL.5432 -f ./src/main/resource/db/table.sql
+            psql --host=localhost:5432 -f ./src/main/resource/db/table.sql
       - run:
           name: Build app.
           command: |
