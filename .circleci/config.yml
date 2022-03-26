@@ -14,7 +14,7 @@ jobs:
           name: Create table.
           command: |
             sudo apt install -y postgresql-client || true
-            psql --host=localhost -f ./src/main/resource/db/table.sql
+            psql -f ./src/main/resource/db/table.sql
       - run:
           name: Build app.
           command: |
